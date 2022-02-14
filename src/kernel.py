@@ -8,6 +8,7 @@ import re
 import json
 import threading
 import subprocess as sp
+from tkinter import filedialog as fd
 
 class Ffplay():
     def __init__(self,target):
@@ -165,7 +166,13 @@ class App(gui.TtsguiApp):
     def event_tts_btn_download(self):
         self.tts.initArg()
         text=self.ui_tts_text.get("1.0","end")
-        self.tts.synthTTStoFile(text,'/tmp/t1.mp3')
+        filef = fd.asksaveasfile(title=u'保存文件',filetypes=[("MP3 file", ".mp3")])
+        if filef is None:
+            pass
+        else:
+            fpath=filef.name
+            filef.close()
+            self.tts.synthTTStoFile(text,fpath)
         pass
 
 
